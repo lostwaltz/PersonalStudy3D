@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
+    
+
     public CharacterEventHandler eventHandler;
 
     private void Awake()
@@ -27,5 +30,13 @@ public class PlayerInputController : MonoBehaviour
     {
         if(context.phase == InputActionPhase.Started)
             eventHandler.CallJumpEvent();
+    }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            eventHandler.CallRunEvent(true);
+        else if(context.phase == InputActionPhase.Canceled)
+            eventHandler.CallRunEvent(false);
     }
 }

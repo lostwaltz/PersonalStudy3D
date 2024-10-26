@@ -1,18 +1,57 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.CullingGroup;
 
-public class StateMachine
+public class StateMachine : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public State CurrentState { get; private set; }
+
+    public Dictionary<string, State> states = new Dictionary<string, State>();
+
+    private CharacterEventHandler eventHandler;
+
+    private void Awake()
     {
-        
+        eventHandler = gameObject.GetComponent<CharacterEventHandler>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize(List<State> Initstates)
     {
-        
+        CurrentState = Initstates[0];
+
+        for (int i = 0; i < Initstates.Count; i++)
+        {
+            Initstates[i].machine = this;
+            Initstates[i].eventHandler = eventHandler;
+            Initstates[i].movement = gameObject.GetComponent<Movement>();
+            Initstates[i].animator = gameObject.GetComponent<Animator>();
+
+            string key = Initstates[i].tag;
+
+            states[key] = Initstates[i];
+        }
+
+        Initstates[0].Enter();
+        eventHandler.CallStateChange(Initstates[0]);
+    }
+
+    public void TransitionTo(State nextState)
+    {
+        CurrentState.Exit();
+        CurrentState = nextState;
+        nextState.Enter();
+
+        eventHandler.CallStateChange(nextState);
+    }
+
+
+    public void Execute()
+    {
+        if (CurrentState != null)
+        {
+            CurrentState.Execute();
+        }
     }
 }
