@@ -6,20 +6,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
-    public Movement movement { get; private set; }
-    public CharacterEventHandler eventHandler { get; private set; }
 
     private void Awake()
     {
         CharacterManager.Instance.Player = this;
 
-        movement = GetComponent<Movement>();
-        eventHandler = GetComponent<CharacterEventHandler>();
-
         InitPlayerState();
 
         //Cursor.lockState = CursorLockMode.Locked;
     }
+    private void Start()
+    {
+        UIManager.Instance.ShowPopupUI<UI_Button>("UI_Button");
+    }
+
     private void Update()
     {
         stateMachine.Execute();

@@ -4,12 +4,20 @@ using UnityEngine;
 
 public abstract class State
 {
-    public Movement movement { get; set; }
-    public CharacterEventHandler eventHandler { get; set; }
-    public StateMachine machine { get; set; }
-    public Animator animator { get; set; }
+    protected Movement movement { get; private set; }
+    protected CharacterEventHandler eventHandler { get; private set; }
+    protected StateMachine machine { get; private set; }
+    protected Animator animator { get; private set; }
 
     public string tag { get; protected set; }
+
+    public void InitState(StateMachine machine, Movement movement, CharacterEventHandler eventHandler, Animator animator)
+    {
+        this.movement = movement;
+        this.eventHandler = eventHandler;
+        this.machine = machine;
+        this.animator = animator;
+    }
 
     public abstract void Enter();
     public abstract void Execute();

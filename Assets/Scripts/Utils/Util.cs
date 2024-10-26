@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Util
 {
+    public static T GetOrAddComponet<T>(GameObject go) where T : UnityEngine.Component
+    {
+        T componet = go.GetComponent<T>();
+
+        if (componet == null)
+            componet = go.AddComponent<T>();
+
+        return componet;
+    }
     public static GameObject FindChild(GameObject go, string name = null, bool recurslve = false)
     {
         return FindChild<Transform>(go, name, recurslve).gameObject;

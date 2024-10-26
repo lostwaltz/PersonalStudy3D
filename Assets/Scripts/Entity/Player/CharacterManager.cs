@@ -2,21 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+public class CharacterManager : Singleton<CharacterManager>
 {
-    private static CharacterManager _instance;
-    public static CharacterManager Instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = new GameObject("CharacterManager").AddComponent<CharacterManager>();
-            }
-            return _instance;
-        }
-    }
-
     public Player _player;
 
     public Player Player { get { return _player; } set { _player = value; } }
