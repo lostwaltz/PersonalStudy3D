@@ -8,5 +8,6 @@ public class Define
     {
         Click,
         Drag,
+        Update
     }
 }

@@ -7,36 +7,35 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
-    
-
-    public CharacterEventHandler eventHandler;
+    public CharacterEventContainer eventHandler;
 
     private void Awake()
     {
-        eventHandler = GetComponent<CharacterEventHandler>();
+        eventHandler = GetComponent<CharacterEventContainer>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        eventHandler.CallMoveEvent(context.ReadValue<Vector2>());
+        eventHandler.OnMoveEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        eventHandler.CallLookEvent(context.ReadValue<Vector2>());
+        eventHandler.OnLookEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started)
-            eventHandler.CallJumpEvent();
+        if (context.phase == InputActionPhase.Started)
+            eventHandler.OnJumpEvent?.Invoke();
     }
 
     public void OnRun(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            eventHandler.CallRunEvent(true);
-        else if(context.phase == InputActionPhase.Canceled)
-            eventHandler.CallRunEvent(false);
+            eventHandler.OnRunEvent?.Invoke(true);
+        else if (context.phase == InputActionPhase.Canceled)
+            eventHandler.OnRunEvent?.Invoke(false);
     }
+
 }

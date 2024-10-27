@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
@@ -39,7 +40,7 @@ public class UIManager : Singleton<UIManager>
 
     public void SetCanvas(GameObject go, bool sort = true)
     {
-        Canvas canvas = Util.GetOrAddComponet<Canvas>(go);
+        Canvas canvas = go.GetOrAddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.overrideSorting = true;
 
@@ -60,7 +61,7 @@ public class UIManager : Singleton<UIManager>
 
         GameObject go = ResourceManager.Instance.Instantiate($"UI/Scene/{name}");
 
-        T sceneUI = Util.GetOrAddComponet<T>(go);
+        T sceneUI = go.GetOrAddComponent<T>();
         _sceneUI = sceneUI;
 
         go.transform.SetParent(RootUI.transform);
@@ -71,11 +72,10 @@ public class UIManager : Singleton<UIManager>
     {
         if(string.IsNullOrEmpty(name))
             name = typeof(T).Name;
-
         
         GameObject go = ResourceManager.Instance.Instantiate($"UI/Popup/{name}");
 
-        T popup = Util.GetOrAddComponet<T>(go);
+        T popup = go.GetOrAddComponent<T>();
         _popupStack.Push(popup);
 
         go.transform.SetParent(RootUI.transform);

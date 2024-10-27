@@ -5,20 +5,10 @@ using UnityEngine;
 
 public class Util
 {
-    public static T GetOrAddComponet<T>(GameObject go) where T : UnityEngine.Component
-    {
-        T componet = go.GetComponent<T>();
-
-        if (componet == null)
-            componet = go.AddComponent<T>();
-
-        return componet;
-    }
     public static GameObject FindChild(GameObject go, string name = null, bool recurslve = false)
     {
         return FindChild<Transform>(go, name, recurslve).gameObject;
     }
-
 
     public static T FindChild<T>(GameObject go, string name = null, bool recurslve = false) where T : UnityEngine.Object
     {
@@ -34,7 +24,7 @@ public class Util
                 if (string.IsNullOrEmpty(name) || transform.name == name)
                 {
                     T component = transform.GetComponent<T>();
-                    if(component != null)
+                    if (component != null)
                         return component;
                 }
             }

@@ -1,33 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public StateMachine stateMachine { get; private set; }
-
     private void Awake()
     {
         CharacterManager.Instance.Player = this;
 
+        InitPlayerComponent();
         InitPlayerState();
 
         //Cursor.lockState = CursorLockMode.Locked;
     }
+
+
+
     private void Start()
     {
-        UIManager.Instance.ShowPopupUI<UI_Button>("UI_Button");
+        UIManager.Instance.ShowPopupUI<UI_VitalDisplay>("UI_VitalDisplay");
     }
-
-    private void Update()
+    private void InitPlayerComponent()
     {
-        stateMachine.Execute();
+        gameObject.GetOrAddComponent<VitalController>();
     }
-
     private void InitPlayerState()
     {
-        stateMachine = gameObject.AddComponent<StateMachine>();
+        StateMachine stateMachine = gameObject.AddComponent<StateMachine>();
 
         List<State> states = new List<State>();
         states.Add(new IdleStatePlayer());
