@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerInputController : MonoBehaviour
 {
-    public CharacterEventContainer eventHandler;
+    private CharacterEventContainer eventHandler;
+
+    public Action OnOpenInventoryEvent { get; set; }
+    public Action OnInteractiveEvent { get; set; }
 
     private void Awake()
     {
@@ -37,5 +41,14 @@ public class PlayerInputController : MonoBehaviour
         else if (context.phase == InputActionPhase.Canceled)
             eventHandler.OnRunEvent?.Invoke(false);
     }
-
+    public void OnOpenInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+            OnOpenInventoryEvent?.Invoke();
+    }
+    public void OnInteractive(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+            OnInteractiveEvent?.Invoke();
+    }
 }

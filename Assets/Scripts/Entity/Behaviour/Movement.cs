@@ -27,12 +27,15 @@ public class Movement : MonoBehaviour
 
     private CharacterStatsHandler statsHandler;
 
+    float ExtraSpeed;
+
     private void Awake()
     {
         isJumpTrigered = false;
         movementRigidbody = GetComponent<Rigidbody>();
         eventHandler = GetComponent<CharacterEventContainer>();
         vitalController = GetComponent<VitalController>();
+        statsHandler = GetComponent<CharacterStatsHandler>();
 
         groundLayerMask = LayerMask.GetMask("Ground");
         CameraTransform = Camera.main.transform;
@@ -71,18 +74,15 @@ public class Movement : MonoBehaviour
             isRun = false;
 
         this.isRun = isRun;
-
-        Debug.Log(isRun);
     }
 
 
     public void ApplyMovement()
     {
         Vector3 direction = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
-        //TODO 매직넘버 수정
-        float speed = isRun ? 5f : 2f;
+        float speed = isRun ? statsHandler.CurrentStat.speed * 2f : statsHandler.CurrentStat.speed;
 
-        direction = direction * speed;
+        direction = direction * (speed + ExtraSpeed);
         direction.y = movementRigidbody.velocity.y;
 
         movementRigidbody.velocity = direction;
@@ -95,7 +95,7 @@ public class Movement : MonoBehaviour
 
         headTransform.localEulerAngles = new Vector3(-curRotAxisX, 0, 0);
 
-        CameraTransform.position = transform.position + (Vector3.up * 1f);
+        CameraTransform.position = transform.position + (Vector3.up * 1.2f);
         CameraTransform.localEulerAngles = new Vector3(-curRotAxisX, 0, 0);
         CameraTransform.position = CameraTransform.position + (- CameraTransform.forward * 1.5f);
 
@@ -110,6 +110,18 @@ public class Movement : MonoBehaviour
         movementRigidbody.AddForce(transform.up * 5f, ForceMode.Impulse);
 
         isJumpTrigered = false;
+    }
+
+    public void StartSpeedBoost()
+    {
+        StartCoroutine(SpeedBoost());
+    }
+
+    IEnumerator SpeedBoost()
+    {
+        ExtraSpeed = 2f;
+        yield return new WaitForSeconds(5f); // 부스트 지속 시간만큼 대기
+        ExtraSpeed = 0f;
     }
 
     public bool isGround()

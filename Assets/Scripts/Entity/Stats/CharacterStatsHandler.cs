@@ -19,6 +19,7 @@ public class CharacterStatsHandler : MonoBehaviour
         CurrentStat = baseStat;
 
         // TODO: Implement modifier logic
+
     }
 }
 

@@ -22,7 +22,6 @@ public class UI_VitalDisplay : UI_Popup
         base.Init();
     }
 
-
     public void UpdateBar(float healthRatio, float staminaRatio)
     {
         Image health = Get<Image>((int)Images.HealthBar);

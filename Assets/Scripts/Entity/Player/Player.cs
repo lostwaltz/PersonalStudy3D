@@ -4,24 +4,26 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class Player : MonoBehaviour
 {
+    public PlayerInputController controller {  get; private set; }
+
     private void Awake()
     {
         CharacterManager.Instance.Player = this;
 
+        controller = GetComponent<PlayerInputController>();
+
         InitPlayerComponent();
         InitPlayerState();
-
-        //Cursor.lockState = CursorLockMode.Locked;
     }
-
-
 
     private void Start()
     {
         UIManager.Instance.ShowPopupUI<UI_VitalDisplay>("UI_VitalDisplay");
+
     }
     private void InitPlayerComponent()
     {

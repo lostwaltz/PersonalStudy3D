@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
+    public Dictionary<string, UI_Base> uiContainer = new Dictionary<string, UI_Base>();
+
     private GameObject rootUI;
 
     public GameObject RootUI
@@ -29,7 +31,6 @@ public class UIManager : Singleton<UIManager>
 
 
     SortedList<int, UI_Popup> _popupList = new SortedList<int, UI_Popup>();
-
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 
@@ -37,6 +38,15 @@ public class UIManager : Singleton<UIManager>
     {
         base.Awake();
     }
+
+    private void Start()
+    {
+        uiContainer.Add("UI_InfoBox", Instance.ShowPopupUI<UI_InfoBox>());
+        uiContainer["UI_InfoBox"].gameObject.SetActive(false);
+
+        uiContainer.Add("UI_Inventory", Instance.ShowPopupUI<UI_Inventory>());
+    }
+
 
     public void SetCanvas(GameObject go, bool sort = true)
     {
