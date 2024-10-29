@@ -20,7 +20,7 @@
 
 ### **기본 이동 및 점프**
 
-- **기술 스택**: `Input System`, `Rigidbody ForceMode`
+
 - **난이도**: ★★☆☆☆
     - `InputSystem`의 `Invoke`를 통해 이벤트를 트리거하고 `Movement`에서 구독하여 입력값에 따른 변수를 초기화합니다.
     - 상태(State)에 따라 실제 움직일 함수를 호출합니다.
@@ -29,7 +29,7 @@
 
 ### **체력바 UI**
 
-- **기술 스택**: `UI`
+
 - **난이도**: ★★☆☆☆
     - 체력바는 `ValueSystem`을 상속받아 `Update`를 추상화합니다.
     - `VitalController`에서 추상화된 `ValueSystem`의 함수를 제공하고 호출합니다.
@@ -38,7 +38,7 @@
 
 ### **동적 환경 조사**
 
-- **기술 스택**: `Raycast`, `UI`
+
 - **난이도**: ★★★☆☆
     - `Interaction` 컴포넌트에서 레이 충돌을 검사합니다.
     - 충돌한 오브젝트의 `IInteractable` 인터페이스를 통해 추상화 함수를 호출합니다.
@@ -47,7 +47,7 @@
 
 ### **점프대** *(Class JumpPad)*
 
-- **기술 스택**: `Rigidbody ForceMode`
+
 - **난이도**: ★★★☆☆
     - `OnCollisionEnter`를 통해 충돌 시 충돌된 `Collision`의 `Rigidbody`에 `AddForce`를 호출합니다.
 
@@ -55,7 +55,7 @@
 
 ### **아이템 데이터**
 
-- **기술 스택**: `ScriptableObject`
+
 - **난이도**: ★★★☆☆
     - `ItemSO`를 상속받는 `ConsumableSO`, `EquipmentSO`를 생성했습니다.
 
@@ -63,7 +63,7 @@
 
 ### **아이템 사용**
 
-- **기술 스택**: `Coroutine`
+
 - **난이도**: ★★★☆☆
     - `ItemSO`의 `Use` 메소드를 추상화하고, 상속받는 SO에서 `Use`를 구현하도록 했습니다.
 
