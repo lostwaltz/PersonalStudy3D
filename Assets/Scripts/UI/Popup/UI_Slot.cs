@@ -34,7 +34,7 @@ public class UI_Slot : UI_Base
         gameObject.BindEvent(UseItem);
     }
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }

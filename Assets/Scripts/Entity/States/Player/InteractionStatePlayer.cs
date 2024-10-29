@@ -16,12 +16,14 @@ public class InteractionStatePlayer : State
     public override void Execute()
     {
         movement.ApplyLook();
-        
 
-        if (true == movement.isWalk)
-            machine.TransitionTo(machine.states["Walk"]);
-        if (true == movement.isJumpTrigered)
-            machine.TransitionTo(machine.states["Jump"]);
+        if (true == rayCheck.isGround())
+        {
+            if (true == movement.isWalk)
+                machine.TransitionTo(machine.states["Walk"]);
+            if (true == movement.isJumpTrigered)
+                machine.TransitionTo(machine.states["Jump"]);
+        }
     }
 
     public override void Exit()

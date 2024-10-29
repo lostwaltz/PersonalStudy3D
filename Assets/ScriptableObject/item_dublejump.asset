@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 178b64e6d4cb75a488358b7ee0319716, type: 3}
-  m_Name: item_speed
+  m_Name: item_dublejump
   m_EditorClassIdentifier: 
-  displayName: "\uC18D\uB3C4 \uC5C5"
-  description: "\uC0AC\uC6A9\uC2DC \uC18D\uB3C4 \uC99D\uAC00"
-  icon: {fileID: -6181022919547679324, guid: 33b75b278d79d0c40941250c42d16e69, type: 3}
+  displayName: "\uB354\uBE14 \uC810\uD504"
+  description: "\uC0AC\uC6A9\uC2DC \uB354\uBE14 \uC810\uD504 \uAC00\uB2A5"
+  icon: {fileID: 1519342809003816866, guid: 3b5142b05c57ecb43a2c6e00f8c820b7, type: 3}
   canStack: 1
   maxStackAmount: 8
   dropPrefab: {fileID: 0}
   consumables:
-  - type: 0
-  - type: 2
+  - type: 1
