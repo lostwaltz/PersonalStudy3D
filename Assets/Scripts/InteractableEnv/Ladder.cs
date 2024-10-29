@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour, IInteractable
 {
-    public void OnHitRay(float hitDistance)
+    public void OnHitRay(Vector3 hitPoint, float hitDistance)
     {
     }
 

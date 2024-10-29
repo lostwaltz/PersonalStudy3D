@@ -19,6 +19,12 @@ public class WalkStatePlayer : State
         movement.ApplyLook();
         movement.ApplyMovement();
 
+        if (rayCheck.isLadderOnFront())
+        {
+            machine.TransitionTo(machine.states["Climb"]);
+            return;
+        }
+
         if (true == movement.isRun)
             machine.TransitionTo(machine.states["Run"]);
 

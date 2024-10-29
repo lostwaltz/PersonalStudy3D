@@ -7,14 +7,15 @@ public class EquipmentSO : ItemSO
 {
 
     [Header("EquipmentSO")]
-    public GameObject dropPrefab;
+    public GameObject equipPrefab;
 
     public float jumpPower;
 
-    public override void Use()
+    public override bool Use()
     {
         base.Use();
+        CharacterManager.Instance.Player.GetComponent<Equipment>().EquipNew(this);
 
-
+        return false;
     }
 }

@@ -9,10 +9,10 @@ public class Movement : MonoBehaviour
     public bool isRun { get; private set; }
     public bool isWalk { get; private set; }
     public bool isJumpTrigered { get; private set; }
+    private int jumpCount;
+    private int maxJumpCount = 1;
 
     private Vector2 curMovementInput;
-    
-    private LayerMask groundLayerMask;
 
     [Header("Look")]
     [SerializeField] private Vector2 curMouseDeltaInput;
@@ -31,13 +31,13 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        jumpCount = maxJumpCount;
         isJumpTrigered = false;
         movementRigidbody = GetComponent<Rigidbody>();
         eventHandler = GetComponent<CharacterEventContainer>();
         vitalController = GetComponent<VitalController>();
         statsHandler = GetComponent<CharacterStatsHandler>();
 
-        groundLayerMask = LayerMask.GetMask("Ground");
         CameraTransform = Camera.main.transform;
     }
 
@@ -63,11 +63,17 @@ public class Movement : MonoBehaviour
     }
     public void CallbackJump()
     {
-        if (false == isGround())
-            return;
+        if (true == GetComponent<RayCheck>().isGround())
+            jumpCount = maxJumpCount;
+
+        if ((false == GetComponent<RayCheck>().isGround() && false == GetComponent<RayCheck>().isLadderOnFront()) && jumpCount <= 0)
+           return;
+
+        jumpCount--;
 
         isJumpTrigered = true;
     }
+
     public void CallbackRun(bool isRun)
     {
         if (1f >= CharacterManager.Instance.Player.GetComponent<VitalController>().CurStamina)
@@ -87,9 +93,23 @@ public class Movement : MonoBehaviour
 
         movementRigidbody.velocity = direction;
     }
+    public void ApplyCliming()
+    {
+        Vector3 direction = transform.up * curMovementInput.y + transform.right * curMovementInput.x;
+        float speed = isRun ? statsHandler.CurrentStat.speed * 2f : statsHandler.CurrentStat.speed;
+
+        direction = direction * (speed + ExtraSpeed);
+
+        movementRigidbody.velocity = direction;
+    }
+
+
     public void ApplyLook()
     {
-        //TODO 매직넘버 수정
+        if (true == CharacterManager.Instance.Player.OpenUI)
+            return;
+
+        //TODO change magic number / magic number -> value
         curRotAxisX += curMouseDeltaInput.y * lookSensitivity;
         curRotAxisX = Mathf.Clamp(curRotAxisX, -55, 75f);
 
@@ -106,7 +126,11 @@ public class Movement : MonoBehaviour
         if (false == isJumpTrigered)
             return;
 
-        //TODO : 매직 넘버 수정
+        //TODO : change magic number / magic number -> value
+        Vector3 vec = movementRigidbody.velocity;
+        vec.y = 0;
+
+        movementRigidbody.velocity = vec;
         movementRigidbody.AddForce(transform.up * 5f, ForceMode.Impulse);
 
         isJumpTrigered = false;
@@ -116,32 +140,24 @@ public class Movement : MonoBehaviour
     {
         StartCoroutine(SpeedBoost());
     }
+    public void StartDobleJump()
+    {
+        StartCoroutine(DobleJump());
+    }
 
     IEnumerator SpeedBoost()
     {
         ExtraSpeed = 2f;
-        yield return new WaitForSeconds(5f); // 부스트 지속 시간만큼 대기
+        yield return new WaitForSeconds(5f);
         ExtraSpeed = 0f;
     }
-
-    public bool isGround()
+    IEnumerator DobleJump()
     {
-        Ray[] rays = new Ray[4]
-        {
-            new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down)
-        };
+        maxJumpCount = 2;
 
-        for (int i = 0; i < rays.Length; i++)
-        {
-            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
-            {
-                return true;
-            }
+        yield return new WaitForSeconds(5f);
 
-        }
-        return false;
+        maxJumpCount = 1;
     }
 }
+

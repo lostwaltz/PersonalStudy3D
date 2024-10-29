@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.XR;
 
 public interface IInteractable
 {
-    public void OnHitRay(float hitDistance);
+    public void OnHitRay(Vector3 hitPoint, float hitDistance);
     public void Oninteract();
 }
 
@@ -20,12 +20,14 @@ public class Interaction : MonoBehaviour
 
     public LayerMask layerMask;
     public IInteractable curInteractable;
+    private Vector3 hitPoint;
 
     private Camera mainCamera;
     private PlayerInputController controller;
     // Start is called before the first frame update
     void Start()
     {
+        hitPoint = Vector3.zero;
         controller = GetComponent<PlayerInputController>();
         mainCamera = Camera.main;
 
@@ -35,7 +37,7 @@ public class Interaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        curInteractable?.OnHitRay(5f);
+        curInteractable?.OnHitRay(hitPoint, 5f);
 
         lastCheckTime += Time.time;
         if (lastCheckTime < checkRate)
@@ -45,11 +47,13 @@ public class Interaction : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 5f, layerMask))
         {
+            hitPoint = hit.point;
             curInteractable = hit.collider.gameObject.GetComponent<IInteractable>();
             UIManager.Instance.uiContainer["UI_InfoBox"].gameObject.SetActive(true);
         }
         else
         {
+            hitPoint = Vector3.zero;
             curInteractable = null;
             UIManager.Instance.uiContainer["UI_InfoBox"].gameObject.SetActive(false);
         }

@@ -7,8 +7,6 @@ public class CharacterStatsHandler : MonoBehaviour
     [SerializeField] private CharacterStat baseStat;
     public CharacterStat CurrentStat { get; private set; }
 
-    public List<CharacterStat> statModifiers = new List<CharacterStat>();
-
     private void Awake()
     {
         UpdateCharacterStat();
@@ -19,7 +17,6 @@ public class CharacterStatsHandler : MonoBehaviour
         CurrentStat = baseStat;
 
         // TODO: Implement modifier logic
-
     }
 }
 

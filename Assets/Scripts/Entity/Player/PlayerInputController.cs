@@ -31,7 +31,9 @@ public class PlayerInputController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
+        {
             eventHandler.OnJumpEvent?.Invoke();
+        }
     }
 
     public void OnRun(InputAction.CallbackContext context)

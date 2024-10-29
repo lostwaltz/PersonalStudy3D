@@ -16,6 +16,7 @@ public class HealthSystem : ValueSystem
 
     public bool IsAttacked { get; private set; }
 
+
     public HealthSystem(CharacterStatsHandler _statsHandler, CharacterEventContainer _eventContainer) : base(_statsHandler)
     {
         eventContainer = _eventContainer;
@@ -42,10 +43,12 @@ public class HealthSystem : ValueSystem
             CurrentValue = Mathf.Clamp(CurrentValue, 0, MaxHealth);
             eventContainer.OnHeal?.Invoke(CurrentValue);
 
-
             vitalController.OnUpdateValue();
             return true;
         }
+
+        if (true == StopChangeValue)
+            return false;
 
         if (false == CheackHealthChangeDelayEnd())
             return false;

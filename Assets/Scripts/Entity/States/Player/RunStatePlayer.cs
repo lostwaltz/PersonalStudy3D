@@ -21,6 +21,12 @@ public class RunStatePlayer : State
         //TODO: need retouch magic number
         vitalController.ChangeValue(VitalType.STAMINA, -10f * Time.deltaTime);
 
+        if (rayCheck.isLadderOnFront())
+        {
+            machine.TransitionTo(machine.states["Climb"]);
+            return;
+        }
+
         if (false == movement.isRun)
             machine.TransitionTo(machine.states["Walk"]);
 

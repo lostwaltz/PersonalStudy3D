@@ -61,7 +61,7 @@ public class UI_Slot : UI_Base
         if (null == itemSO)
             return;
 
-        itemSO.Use();
-        uI_Inventory.RemoveItem(slotIndex, 1);
+        if(true == itemSO.Use())
+            uI_Inventory.RemoveItem(slotIndex, 1);
     }
 }

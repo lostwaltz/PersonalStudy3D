@@ -6,7 +6,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 {
     public ItemSO data;
 
-    public void OnHitRay(float hitDistance)
+    public void OnHitRay(Vector3 hitPoint, float hitDistance)
     {
         string str = $"{data.displayName}\n{data.description}";
         UIManager.Instance.uiContainer["UI_InfoBox"].gameObject.GetComponent<UI_InfoBox>().UpdateInfoBox(str);

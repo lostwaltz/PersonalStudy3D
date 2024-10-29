@@ -16,6 +16,7 @@ public abstract class ValueSystem
     protected CharacterStatsHandler statsHandler;
     protected VitalController vitalController;
     public float CurrentValue;
+    public bool StopChangeValue = false;
 
     public abstract void Update();
     public abstract bool ChangeValue(float amount);
@@ -62,7 +63,7 @@ public class VitalController : MonoBehaviour
         switch (vitalType)
         {
             case VitalType.HEALTH:
-                return staminaSystem.ChangeValue(amount);
+                return healthSystem.ChangeValue(amount);
             case VitalType.STAMINA:
                 return staminaSystem.ChangeValue(amount);
         }
@@ -75,4 +76,18 @@ public class VitalController : MonoBehaviour
         OnVitalValueChange?.Invoke(healthSystem.CurrentValue / statsHandler.CurrentStat.maxHealth, staminaSystem.CurrentValue / statsHandler.CurrentStat.maxStamnia);
     }
 
+    public bool isInvinciblility = false;
+
+    public void StartInvinciblility()
+    {
+        StartCoroutine(Invinciblility());
+    }
+
+    IEnumerator Invinciblility()
+    {
+        healthSystem.StopChangeValue = true;
+        yield return new WaitForSeconds(5f);
+        healthSystem.StopChangeValue = false;
+
+    }
 }

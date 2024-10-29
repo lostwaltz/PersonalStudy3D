@@ -9,9 +9,14 @@ using UnityEngine.InputSystem.XR;
 public class Player : MonoBehaviour
 {
     public PlayerInputController controller {  get; private set; }
+    public bool OpenUI { get; set; }
 
     private void Awake()
     {
+        OpenUI = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+
         CharacterManager.Instance.Player = this;
 
         controller = GetComponent<PlayerInputController>();
@@ -38,6 +43,8 @@ public class Player : MonoBehaviour
         states.Add(new WalkStatePlayer());
         states.Add(new RunStatePlayer());
         states.Add(new JumpStatePlayer());
+        states.Add(new ClimbStatePlayer(GetComponent<Rigidbody>()));
+        states.Add(new InteractionStatePlayer());
 
         stateMachine.Initialize(states);
     }

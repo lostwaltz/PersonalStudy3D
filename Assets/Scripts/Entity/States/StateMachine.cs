@@ -22,7 +22,7 @@ public class StateMachine : MonoBehaviour
 
         for (int i = 0; i < Initstates.Count; i++)
         {
-            Initstates[i].InitState(this, gameObject.GetComponent<Movement>(), eventHandler, gameObject.GetComponent<Animator>(), gameObject.GetComponent<VitalController>());
+            Initstates[i].InitState(this, gameObject.GetComponent<Movement>(), eventHandler, gameObject.GetComponent<Animator>(), gameObject.GetComponent<VitalController>(), gameObject.GetComponent<RayCheck>());
 
             string key = Initstates[i].tag;
 

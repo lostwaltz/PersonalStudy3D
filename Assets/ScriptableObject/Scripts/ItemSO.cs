@@ -19,7 +19,8 @@ public class ItemSO : ScriptableObject
     public bool canStack;
     public int maxStackAmount;
 
-    public virtual void Use()
+    public virtual bool Use()
     {
+        return false;
     }
 }

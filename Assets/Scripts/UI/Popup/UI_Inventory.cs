@@ -13,6 +13,8 @@ public class UI_Inventory : UI_Popup
     public List<int> quantityList = new List<int>();
     public UI_Slot[] slots;
 
+    private int curEquipSlot;
+
     enum GameObjects { SlotList }
     public override void Init()
     {
@@ -33,9 +35,12 @@ public class UI_Inventory : UI_Popup
 
         CharacterManager.Instance.Player.controller.OnOpenInventoryEvent += Togle;
     }
+
     private void Start()
     {
         Init();
+
+        gameObject.SetActive(false);
     }
 
     private void Togle()
@@ -43,6 +48,8 @@ public class UI_Inventory : UI_Popup
         Cursor.lockState = gameObject.activeInHierarchy ? CursorLockMode.Locked : CursorLockMode.None;
 
         gameObject.SetActive(!gameObject.activeInHierarchy);
+        CharacterManager.Instance.Player.OpenUI = gameObject.activeInHierarchy;
+
     }
 
     public void Update()
@@ -58,6 +65,7 @@ public class UI_Inventory : UI_Popup
 
         UpdateInventory();
     }
+
     private void AddStackableItem(ItemSO itemSO, int addQuantity)
     {
         for (int i = 0; i < itemDataList.Count; i++)
@@ -85,6 +93,7 @@ public class UI_Inventory : UI_Popup
                 AddStackableItem(itemSO, addQuantity);
         }
     }
+
     private void AddNonStackableItem(ItemSO itemSO, int addQuantity)
     {
         if (itemDataList.Count + addQuantity > slots.Length)
@@ -99,6 +108,7 @@ public class UI_Inventory : UI_Popup
             quantityList.Add(1);
         }
     }
+
     public void UpdateInventory()
     {
         int index = 0;

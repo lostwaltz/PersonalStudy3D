@@ -15,6 +15,9 @@ public class StaminaSystem : ValueSystem
 
     public override bool ChangeValue(float amount)
     {
+        if (true == StopChangeValue)
+            return false;
+
         timeSinceLastCahange = 0f;
 
         CurrentValue += amount;
