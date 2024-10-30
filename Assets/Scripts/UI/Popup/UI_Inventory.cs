@@ -65,7 +65,6 @@ public class UI_Inventory : UI_Popup
 
         UpdateInventory();
     }
-
     private void AddStackableItem(ItemSO itemSO, int addQuantity)
     {
         for (int i = 0; i < itemDataList.Count; i++)

@@ -1,4 +1,6 @@
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
@@ -70,11 +72,13 @@ public class Singleton<T> : MonoBehaviour where T : Component
         }
         else if (s_Instance != this)
         {
+            Debug.Log($"{ToString()} is Duplicate! ");
             Destroy(gameObject);
         }
+
     }
 
-    private void SceneManager_SceneUnloaded(Scene scene)
+    protected virtual void SceneManager_SceneUnloaded(Scene scene)
     {
         if (s_Instance != null)
             Destroy(s_Instance.gameObject);

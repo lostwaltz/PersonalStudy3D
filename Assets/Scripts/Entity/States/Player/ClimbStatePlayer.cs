@@ -23,7 +23,6 @@ public class ClimbStatePlayer : State
     {
         movement.ApplyLook();
         movement.ApplyCliming();
-
         //rigidbody.AddForce((Vector3.up * 10f) * Time.deltaTime, ForceMode.Acceleration);
 
         if (true == movement.isJumpTrigered)
