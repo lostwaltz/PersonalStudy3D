@@ -156,9 +156,10 @@
 
 ---
 
-### **미구현 기능**
+### **발전된 AI**
 
-- **발전된 AI**
-    - **난이도**: ★★★★★
+- **난이도**: ★★★★★
+    - NavMeshSurface.BulidNavMesh() 메서드를 통해 동적으로 Bake를 진행하고 NavMeshObstacle, NavMesh ModifierVolume을 통해 Nav 제거와 가중치를 설정하고 NavMeshAgent.CalculatePath()로 Path를 받아와 가중치 영역을 피해 돌아오게 했습니다.
+    
 
 </details>
